@@ -7,6 +7,7 @@ from product.views import home_page
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_page, name='home'),
-    path('accounts/', include('account.urls'))
-]# + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('accounts/', include('account.urls')),
+    path('products/', include('product.urls'))
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

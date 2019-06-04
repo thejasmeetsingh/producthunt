@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.title }}{% endblock %}
+
+{% block product %}
+    <div class="container pt-5">
+        <div class="row bg-secondry">
+            <div class="col-md-2">
+                <img class="img-fluid img-thumbnail" src="{{ product.icon.url }}" alt="" style="border-radius: 12px;">
+            </div>
+            <div class="col-md-10 pt-3">
+                <a href="{{ product.url }}" style="text-decoration:none"><h1 class="text-capitalize font-weight-bolder text-info">{{ product.title }}</h1></a>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-8">
+                <img class="img-fluid" src="{{ product.image.url }}" alt="" style="border-radius: 12px;">
+                <hr>
+            </div>
+            <div class="col-md-4">
+                <a href="javascript: { document.getElementById('upvote').submit() }" style="text-decoration:none"><button class="btn btn-outline-info btn-lg" style="width: 350px"><i class="fas fa-chevron-up"></i> Upvote {{ product.votes_total }}</button></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h5><i class="fas fa-search"></i> Hunted by {{ product.hunter.username }}</h5>
+            </div>
+            <div class="col-md-4 text-right">
+                <h5><i class="far fa-calendar-alt"></i> {{ product.pub_date }}</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <p class="font-weight-normal text-justify">{{ product.body }}</p>
+            </div>
+        </div>
+    </div>
+    <form action="{% url 'upvote' product.id %}" method="POST" id="upvote">
+        {% csrf_token %}
+        <input type="hidden">
+    </form>
+{% endblock %}

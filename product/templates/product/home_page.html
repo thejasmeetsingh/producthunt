@@ -1,7 +1,26 @@
 {% extends 'base.html' %}
 
-{% block title %}Homepage{% endblock %}
+{% block title %}Product Hunt{% endblock %}
 
 {% block product %}
-    <h1>Welcome to Homepage!</h1>
+    <div class="container pt-5">
+        {% for product in products %}
+            <div class="row pb-4">
+                <div class="col-md-4">
+                    <a href="{% url 'product_details' product.id %}" style="text-decoration:none"><img class="img-fluid img-thumbnail" src="{{ product.icon.url }}" alt=""></a>
+                </div>
+                <div class="col-md-6 pt-3">
+                    <a class="text-info" href="{% url 'product_details' product.id %}" style="text-decoration:none"><h3>{{ product.title }}</h3></a>
+                    <p class="text-justify">{{ product.summary }}</p>
+                </div>
+                <div class="col-md-2 pt-5">
+                    <a href="javascript: { document.getElementById('upvote{{ product.id }}').submit() }" style="text-decoration:none"><button class="btn btn-outline-info btn-lg"><i class="fas fa-chevron-up"></i> Upvote {{ product.votes_total }}</button></a>
+                </div>
+            </div>
+            <form action="{% url 'upvote' product.id %}" method="POST" id="upvote{{ product.id }}">
+                {% csrf_token %}
+                <input type="hidden">
+            </form>
+        {% endfor %}
+    </div>
 {% endblock %}
